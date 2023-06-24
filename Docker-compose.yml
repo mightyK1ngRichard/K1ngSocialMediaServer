@@ -1,0 +1,18 @@
+version: "3.8" 
+services:
+  db: 
+    image: postgres:12 
+    volumes: 
+      - type: volume
+        source: k1ngSocialMedia
+        target: /var/lib/postgresql/data
+    ports:
+      - "2727:5432"
+    environment: 
+      POSTGRES_USER: king
+      POSTGRES_DB: kingSocialMedia
+      POSTGRES_PASSWORD: king
+
+volumes:
+  k1ngSocialMedia:
+    driver: local
