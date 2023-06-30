@@ -8,4 +8,5 @@ type Comments struct {
 	UserID       int    `json:"user_id"`
 	PostID       int    `json:"post_id"`
 	UserAvatar   string `json:"avatar"`
+	Nickname     string `json:"nickname"`
 }

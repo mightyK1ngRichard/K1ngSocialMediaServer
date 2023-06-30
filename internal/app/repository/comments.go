@@ -7,10 +7,11 @@ import (
 
 func (r *Repository) GetAllCommentsOfPostsByUserID(userID string) (*[]ds.Comments, error) {
 	rows, err := r.db.Query(`
-	SELECT c.id, c.date_public, c.content, c.count_of_likes, c.user_id, c.post_id, u.avatar
+	SELECT c.id, c.date_public, c.content, c.count_of_likes, c.user_id, c.post_id, u.avatar, u.nickname
 	FROM comments_under_post c
 	LEFT JOIN users u on u.id = c.user_id
-	WHERE user_id = $1;
+	WHERE user_id = $1
+	ORDER BY c.date_public DESC;
 	`, userID)
 	if err != nil {
 		return nil, err
@@ -33,6 +34,7 @@ func (r *Repository) GetAllCommentsOfPostsByUserID(userID string) (*[]ds.Comment
 			&c.UserID,
 			&c.PostID,
 			&c.UserAvatar,
+			&c.Nickname,
 		); err != nil {
 			r.logger.Error(err)
 			continue

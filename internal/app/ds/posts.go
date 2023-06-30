@@ -7,4 +7,6 @@ type Post struct {
 	CountOfLikes    int    `json:"count_of_likes"`
 	CountOfComments int    `json:"count_of_comments"`
 	UserID          int    `json:"user_id"`
+	UserAvatar      string `json:"avatar"`
+	Nickname        string `json:"nickname"`
 }
