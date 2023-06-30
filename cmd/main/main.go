@@ -15,6 +15,7 @@ func main() {
 	log.Println("Application start!")
 	router := gin.Default()
 	logger := logrus.New()
+
 	postgresqlLine := dsn.FromEnv(logger)
 	if postgresqlLine == "" {
 		logger.Error("Postgres line is empty")
