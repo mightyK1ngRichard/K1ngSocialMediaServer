@@ -3,6 +3,7 @@ package app
 import (
 	"K1ngSochialMediaServer/internal/app/config"
 	"K1ngSochialMediaServer/internal/app/repository"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 )
@@ -32,9 +33,10 @@ func (a *Application) Run() {
 	}()
 
 	a.Logger.Info("Server start up")
-	a.Router.Static("/static/image", "./resources")
+	a.Router.Static("/static/img", "./static/img")
 
-	if err := a.Router.Run(":8010"); err != nil {
+	addr := fmt.Sprintf(":%d", a.Config.ServicePort)
+	if err := a.Router.Run(addr); err != nil {
 		a.Logger.Fatalln(err)
 	}
 	a.Logger.Info("Server down")

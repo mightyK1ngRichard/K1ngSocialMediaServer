@@ -51,7 +51,7 @@ func (h *Handler) UploadImage(ctx *gin.Context) {
 	userID := ctx.Param("id")
 
 	if err != nil {
-		h.handApp.Logger.Error(err)
+		h.handApp.Logger.Errorf("error from handler/users FormFile returned error: %s", err)
 		ctx.JSON(http.StatusBadRequest, "file not found")
 		return
 	}
@@ -59,7 +59,8 @@ func (h *Handler) UploadImage(ctx *gin.Context) {
 	extension := filepath.Ext(file.Filename)
 	fileName, err2 := h.handApp.Repository.AddUserImage(extension, userID)
 	if err2 != nil {
-		h.handApp.Logger.Error(err)
+
+		h.handApp.Logger.Errorf("error from handler/users db addUserImage: %s", err2)
 		ctx.JSON(http.StatusInternalServerError, "Error saving file")
 		return
 	}

@@ -21,13 +21,13 @@ func main() {
 		logger.Error("Postgres line is empty")
 	}
 
-	rep, err := repository.NewRepository(postgresqlLine, logger)
+	conf, err := config.NewConfig(logger)
 	if err != nil {
 		log.Fatalln(err)
 	}
 
-	conf, err := config.NewConfig(logger)
-	if err != nil {
+	rep, err2 := repository.NewRepository(postgresqlLine, logger, conf)
+	if err2 != nil {
 		log.Fatalln(err)
 	}
 

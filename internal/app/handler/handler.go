@@ -6,6 +6,7 @@ import (
 )
 
 const (
+	//StaticImgURL = "/static/img"
 	usersURL = "/users"
 	posts    = "/posts"
 	comments = "/comments"
