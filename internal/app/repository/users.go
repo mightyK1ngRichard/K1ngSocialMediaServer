@@ -2,6 +2,7 @@ package repository
 
 import (
 	"K1ngSochialMediaServer/internal/app/ds"
+	"K1ngSochialMediaServer/internal/utils"
 	"strconv"
 )
 
@@ -102,4 +103,13 @@ func (r *Repository) GetUserImages(userId string) (*[]ds.UserImages, error) {
 	}
 
 	return &images, nil
+}
+
+func (r *Repository) AddUserImage(expansion, userId string) (string, error) {
+	imageName := utils.GenerateUniqueFileName(expansion)
+	_, err := r.db.Exec(`INSERT INTO user_images (image_name, user_id) VALUES ($1, $2);`, imageName, userId)
+	if err != nil {
+		return "", err
+	}
+	return imageName, nil
 }
