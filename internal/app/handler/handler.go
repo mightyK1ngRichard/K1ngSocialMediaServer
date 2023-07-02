@@ -11,6 +11,7 @@ const (
 	posts    = "/posts"
 	comments = "/comments"
 	image    = "user/:id/upload"
+	test     = "test"
 )
 
 type Handler struct {
@@ -28,4 +29,5 @@ func (h *Handler) Register(router *gin.Engine) {
 	router.GET(posts, h.GetUserPosts)
 	router.GET(comments, h.GetAllCommentsOfPostsByUserID)
 	router.POST(image, h.UploadImage)
+	router.POST(test, h.Test)
 }

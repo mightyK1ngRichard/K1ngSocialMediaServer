@@ -14,8 +14,9 @@ func (h *Handler) List(ctx *gin.Context) {
 		users, err := h.handApp.Repository.GetAllUsers()
 		if err != nil {
 			h.handApp.Logger.Error(err)
-			ctx.JSON(http.StatusNotFound, gin.H{
-				"error": nil,
+			message := fmt.Sprintf("error from database: %s", err)
+			ctx.JSON(http.StatusInternalServerError, gin.H{
+				"error": message,
 			})
 			return
 		}
@@ -31,9 +32,9 @@ func (h *Handler) List(ctx *gin.Context) {
 
 	if err != nil {
 		h.handApp.Logger.Error(err)
-		textError := fmt.Sprintf(errorNotFoundUser, id)
-		ctx.JSON(http.StatusNotFound, gin.H{
-			"error": textError,
+		message := fmt.Sprintf("error from database: %s", err)
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"error": message,
 		})
 		return
 	}
@@ -86,4 +87,40 @@ func (h *Handler) UploadImage(ctx *gin.Context) {
 		return
 	}
 	ctx.JSON(http.StatusOK, fileName)
+}
+
+// Test TODO: удалить.
+func (h *Handler) Test(ctx *gin.Context) {
+	type TestData struct {
+		Name string `json:"name"`
+	}
+
+	header := ctx.GetHeader("Content-Type")
+
+	switch header {
+	case "application/x-www-form-urlencoded":
+		name := ctx.PostForm("name")
+		ctx.JSON(http.StatusOK, gin.H{
+			"name": name,
+		})
+		return
+
+	case "application/json":
+		var data TestData
+		if err := ctx.ShouldBindJSON(&data); err != nil {
+			ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+		name := data.Name
+		ctx.JSON(http.StatusOK, gin.H{
+			"name": name,
+		})
+		return
+
+	default:
+		h.handApp.Logger.Error("uncorrected header")
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"error": "uncorrected header: " + header,
+		})
+	}
 }
