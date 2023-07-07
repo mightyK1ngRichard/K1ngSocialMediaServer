@@ -12,6 +12,16 @@ services:
       POSTGRES_USER: king
       POSTGRES_DB: kingSocialMedia
       POSTGRES_PASSWORD: king
+  main:
+    container_name: go-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: ./app
+    ports:
+      - "8010:8010"
+    depends_on:
+      - db
 
 volumes:
   k1ngSocialMedia:
