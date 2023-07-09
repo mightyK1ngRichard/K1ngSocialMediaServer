@@ -22,7 +22,6 @@ services:
       - "8010:8010"
     depends_on:
       - db
-
 volumes:
   k1ngSocialMedia:
     driver: local
