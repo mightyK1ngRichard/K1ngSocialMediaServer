@@ -1,6 +1,7 @@
 version: "3.8" 
 services:
-  db: 
+  db:
+    container_name: king-db
     image: postgres:12 
     volumes: 
       - type: volume
@@ -25,3 +26,6 @@ services:
 volumes:
   k1ngSocialMedia:
     driver: local
+
+# docker exec -it king-db /bin/bash
+# psql -U king -d kingSocialMedia
